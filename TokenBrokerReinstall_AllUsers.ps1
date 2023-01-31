@@ -14,4 +14,6 @@ If (Test-Path $folder) {Remove-Item $folder -Recurse -Force -ErrorAction silentl
 #Re-Install broker plugin
 Add-AppxPackage -Register "C:\Windows\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Appxmanifest.xml" -DisableDevelopmentMode -ForceApplicationShutdown 
 
-#DSRegCMD /Leave
+#DSRegCMD /ForceRecovery
+
+write-host Please open Word.exe after running this script.
