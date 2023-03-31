@@ -5,16 +5,27 @@ cmdkey /list | ForEach-Object{if($_ -like "*Target:*" -and $_ -like "*microsoft*
 #delete the identity key
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Common\Identity /f
 
+#Check if Temp Directory exists and create if not present
+$folder1 = "C:\Temp"
+If(-not (Test-Path -LiteralPath $folder1)){New-Item -Path $folder1 -ItemType Directory -ErrorAction Stop | out-Null}
+
+#Save DefaultAccount registry to C:\Temp
+reg save HKEY_CURRENT_USER\Software\Microsoft\IdentityCRL\TokenBroker\DefaultAccount c:\temp\DefaultAccount.bak /y
+#Delete Default Account registry key
+reg delete HKEY_CURRENT_USER\Software\Microsoft\IdentityCRL\TokenBroker\DefaultAccount /f
+
 #delete broker plugin for all users
 $users = Get-ChildItem C:\Users
-foreach ($user in $users){$folder = "$($user.fullname)\AppData\Local\Packages\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy" 
+foreach ($user in $users){$folder = "$($user.fullname)\AppData\Local\Packages\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy"
+
 #delete the broker plugin for all users
 If (Test-Path $folder) {Remove-Item $folder -Recurse -Force -ErrorAction silentlycontinue } }
 
 #Re-Install broker plugin
-Add-AppxPackage -Register "C:\Windows\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Appxmanifest.xml" -DisableDevelopmentMode -ForceApplicationShutdown 
+Add-AppxPackage -Register "$env:windir\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Appxmanifest.xml" -DisableDevelopmentMode -ForceApplicationShutdown 
 
-#Do no run dsregcmd /leave unless you have the ability to rejoin back to Azure AD
+#Do not run dsregcmd /leave unless you have the ability to rejoin back to Azure AD
+#Verify you have a local Account on the machine before running any /leave or /ForceRecovery commands as you may be required to login to re-join Azure AD without Line of sight to DC
 #DSRegCMD /ForceRecovery
 
 write-host Please open Word.exe after completing the script
