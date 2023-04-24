@@ -9,8 +9,6 @@ reg delete HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Common\Identity /f
 $folder1 = "C:\Temp"
 If(-not (Test-Path -LiteralPath $folder1)){New-Item -Path $folder1 -ItemType Directory -ErrorAction Stop | out-Null}
 
-#Save DefaultAccount registry to C:\Temp
-reg save HKEY_CURRENT_USER\Software\Microsoft\IdentityCRL\TokenBroker\DefaultAccount c:\temp\DefaultAccount.reg /y
 #Delete Default Account registry key
 reg delete HKEY_CURRENT_USER\Software\Microsoft\IdentityCRL\TokenBroker\DefaultAccount /f
 
