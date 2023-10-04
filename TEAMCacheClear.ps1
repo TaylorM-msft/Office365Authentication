@@ -20,7 +20,9 @@ foreach ($user in $users)
 	$folder5 = "$($user.fullname)\AppData\Roaming\Microsoft\teams\Local Storage\"
 	$folder6 = "$($user.fullname)\AppData\Roaming\Microsoft\teams\tmp\"
 	$folder7 = "$($user.fullname)\AppData\Local\Microsoft\TokenBroker\Cache\"
-	$folder8 = "$($user.fullname)\AppData\Local\Packages\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy"
+ 	$folder8 = "$($user.fullname)\AppData\Local\Microsoft\IdentityCache"
+	$folder9 = "$($user.fullname)\AppData\Local\Microsoft\OneAuth"
+	$folder10 = "$($user.fullname)\AppData\Local\Packages\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy"
 	If (Test-Path $folder0) {Remove-Item $folder0 -Recurse -Force -ErrorAction silentlycontinue }
 	If (Test-Path $folder1) {Remove-Item $folder1 -Recurse -Force -ErrorAction silentlycontinue }
 	If (Test-Path $folder2) {Remove-Item $folder2 -Recurse -Force -ErrorAction silentlycontinue }
@@ -30,5 +32,7 @@ foreach ($user in $users)
 	If (Test-Path $folder6) {Remove-Item $folder6 -Recurse -Force -ErrorAction silentlycontinue }
 	If (Test-Path $folder7) {Remove-Item $folder7 -Recurse -Force -ErrorAction silentlycontinue }
 	If (Test-Path $folder8) {Remove-Item $folder8 -Recurse -Force -ErrorAction silentlycontinue }
+ 	If (Test-Path $folder9) {Remove-Item $folder9 -Recurse -Force -ErrorAction silentlycontinue }
+ 	If (Test-Path $folder10) {Remove-Item $folder10 -Recurse -Force -ErrorAction silentlycontinue }
 }
 Add-AppxPackage -Register "C:\Windows\SystemApps\Microsoft.AAD.BrokerPlugin_cw5n1h2txyewy\Appxmanifest.xml" -DisableDevelopmentMode -ForceApplicationShutdown 
