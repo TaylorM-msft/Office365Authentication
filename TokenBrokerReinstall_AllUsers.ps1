@@ -5,10 +5,6 @@ cmdkey /list | ForEach-Object{if($_ -like "*Target:*" -and $_ -like "*microsoft*
 #delete the identity key
 reg delete HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Common\Identity /f
 
-#Check if Temp Directory exists and create if not present
-$Tempfolder = "C:\Temp"
-If(-not (Test-Path -LiteralPath $Tempfolder)){New-Item -Path $Tempfolder -ItemType Directory -ErrorAction Stop | out-Null}
-
 #Delete Default Account registry key
 reg delete HKEY_CURRENT_USER\Software\Microsoft\IdentityCRL\TokenBroker\DefaultAccount /f
 
